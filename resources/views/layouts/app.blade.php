@@ -18,28 +18,37 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
-        <x-banner />
+    <x-jet.banner />
 
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+    <div class="min-h-screen bg-[#F8F8FF]">
+        {{-- @livewire('navigation-menu') --}}
+        <x-menu.base.sidenav />
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+        @if (isset($header))
+            <header class="bg-white shadow mt-16">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
+        @endif
 
-            <!-- Page Content -->
-            <main>
+        <!-- Page Heading -->
+
+        <!-- Page Content -->
+        <main class="sm:mt-16">
+            <div class="sm:p-5">
                 {{ $slot }}
-            </main>
-        </div>
+            </div>
+        </main>
+    </div>
 
-        @stack('modals')
+    @stack('modals')
 
-        @livewireScripts
+    @livewireScripts
+
+
+    @if (\Route::current()->getName() == 'dashboard')
+        <x-web.dashboard.copyright />
+    @endif
     </body>
 </html>
