@@ -16,8 +16,7 @@
 {{--                    <div class="font-bold text-gray-600">--}}
 {{--                        <img src="../../../../images/logo.png" alt="" class="w-auto h-1">--}}
 {{--                    </div>--}}
-{{--                    <a class="font-bold text-gray-600" href="{{route('home')}}">Home</a>--}}
-                    <a class="font-bold text-gray-600" href="#">Home</a>
+                    <a class="font-bold text-gray-600" href="{{route('home')}}">Home</a>
                     <a class="font-bold text-gray-600" href="{{route('dashboard')}}">Dashboard</a>
                 </div>
             </div>

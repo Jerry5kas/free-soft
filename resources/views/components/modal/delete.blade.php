@@ -1,7 +1,7 @@
-<div class="absolute top-0 left-0 flex items-center justify-center w-full h-full bg-gray-600/40 "
-     x-show="modelDelete">
+<div class="fixed z-20 inset-0 top-0 left-0 flex items-center justify-center w-full h-full bg-gray-600/40"
+     x-show="modelDelete" x-cloak>
     <div
-        class="absolute top-24 h-auto p-4 mx-2 text-left rounded shadow-xl w-[600px] space-y-4 bg-violet-50"
+        class="absolute top-24 z-20 h-hull p-4 mx-2 text-left rounded shadow-xl w-[600px] space-y-4 bg-violet-50"
         @click.away="modelDelete = false">
         <div class="flex-col flex gap-y-3  rounded-md">
             <div class="inline-flex items-center gap-x-4 border-b-2 border-red-600 p-2 py-4">

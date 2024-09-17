@@ -15,6 +15,10 @@ class Index extends Component
     public mixed $name;
     public $search;
 
+    public $eId;
+    #[Rule('required|min:4|max:60')]
+    public $eName;
+
     public function create()
     {
         $validated = $this->validateOnly('name');
@@ -22,16 +26,42 @@ class Index extends Component
         Todo::create([
             'name' => $validated['name'],
         ]);
-//        dd($validated);
         $this->reset('name');
-        $this->name='';
         session()->flash('success', 'Created');
-//        $this->redirect(route('todos'));
+        $this->resetPage();
     }
 
-    public function delete(Todo $todoId)
+    public function edit($id)
     {
-        $todoId->delete();
+        $this->eId = $id;
+        $this->eName = Todo::find($id)->name;
+    }
+
+    public function delete(Todo $id)
+    {
+        $id->delete();
+        $this->redirect('todos');
+    }
+
+    public function toggle($id)
+    {
+        $todo = Todo::find($id);
+        $todo->completed = !$todo->completed;
+        $todo->save();
+    }
+
+    public function update() {
+        $this->validateOnly('eName');
+        Todo::find($this->eId)->update([
+            'name' => $this->eName,
+        ]);
+        $this->cancel();
+    }
+
+    public function cancel()
+    {
+        $this->reset('eId');
+        $this->reset('eName');
     }
 
     public function render()
