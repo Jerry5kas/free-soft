@@ -8,7 +8,7 @@
 
     <x-menu.items.menu label="Common">
         <x-menu.items.sub label="Tags" href="{{route('tags')}}" />
-        <x-menu.items.sub label="Category" href="" />
+        <x-menu.items.sub label="Category" href="{{route('categories')}}" />
     </x-menu.items.menu>
     <x-menu.items.menu label="Tasks">
         <x-menu.items.sub label="Todos" href="{{ route('todos') }}" />

@@ -24,5 +24,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'jerry@jsoft.com',
             'password' => '12345678',
         ]);
+
+        $this->call(CategorySeeder::class);
+
     }
 }

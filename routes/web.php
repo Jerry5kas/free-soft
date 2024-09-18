@@ -17,6 +17,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
     ->group(function () {
         Route::get('/tags', App\Livewire\Common\Tags::class)->name('tags');
+        Route::get('/categories', App\Livewire\Common\Category::class)->name('categories');
     });
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
