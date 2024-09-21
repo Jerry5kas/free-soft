@@ -1,35 +1,21 @@
 <div>
     <!-- modal div -->
     <x-forms.m-panel-empty label="Tags">
-        <x-modal.form>
-            {{$name}}
-            <div class="w-full flex items-center justify-between">
-                <div class="w-1/3">
-                    <x-table.caption caption="Tags">
-                        {{$lists->count()}}
-                    </x-table.caption>
-                </div>
-                <div class="inline-flex items-center gap-2 text-sm tracking-wider font-semibold">
-                    <input type="checkbox" wire:model.live="active"
-                           class="rounded-sm text-cyan-600 focus:ring-cyan-600 border-2 border-cyan-600 transition-all duration-300 ease-out">
-                    <label for="">Active Only?</label>
-                </div>
-            </div>
-
+        <x-modal.form :list="$lists->count()">
+            <x-button.primary-btn wire:click="open">open</x-button.primary-btn>
             <!-- Table Header --------------------------------------------------------------------------------------------->
             <x-table.form>
                 <x-slot:table_header name="table_header" class="bg-green-100">
 
-                    <x-table.header-serial width="20%"/>
+                    <x-table.header-serial/>
 
                     <x-table.header-text sortIcon="{{$this->sortAsc}}">Tag Name
                     </x-table.header-text>
                     @if (!$active)
-                        <x-table.header-text sortIcon="{{$this->sortAsc}}">Status
+                        <x-table.header-text sortIcon="{{$this->sortAsc}}" width="8%">Status
                         </x-table.header-text>
                     @endif
                     <x-table.header-action/>
-
                 </x-slot:table_header>
 
                 <!-- Table Body ------------------------------------------------------------------------------------------->
@@ -40,11 +26,17 @@
                             <x-table.cell-text> {{ $index + 1 }} </x-table.cell-text>
                             <x-table.cell-text> {{ $row->name }} </x-table.cell-text>
                             @if (!$active)
-                                <x-table.cell-text> {{ $row->active_id ? 'Active' : 'Not active' }} </x-table.cell-text>
+                                <x-table.cell-text class="flex justify-center items-center">
+                                    @if($row->active_id)
+                                        <div class="w-4 h-4 rounded-full bg-green-500"></div>
+                                    @else
+                                        <div class="w-4 h-4 rounded-full bg-red-500"></div>
+
+                                    @endif
+                                </x-table.cell-text>
                             @endif
                             <x-table.cell-action id="{{$row->id}}"/>
                         </x-table.row>
-
                     @empty
                         <x-table.cell-empty/>
                     @endforelse
@@ -53,12 +45,15 @@
             <div>{{ $lists->links() }}</div>
 
             <!-- Create Modal -->
-            <x-modal.dialog label="Tag">
+            <x-modal.createDialog label="Tag">
                 <x-input.floating label="Name" wire:model.live="name"/>
                 @error('name')
                 <span class="text-red-500">{{  $message }}</span>
                 @enderror
-            </x-modal.dialog>
+            </x-modal.createDialog>
         </x-modal.form>
     </x-forms.m-panel-empty>
+        <x-jet.modal wire:model.deffer="openModal">test</x-jet.modal>
+{{--    @if($openModal==true)--}}
+{{--    @endif--}}
 </div>

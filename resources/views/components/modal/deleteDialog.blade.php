@@ -1,10 +1,10 @@
 <div class="fixed z-20 inset-0 top-0 left-0 flex items-center justify-center w-full h-full bg-gray-600/40"
      x-show="modelDelete" x-cloak>
     <div
-        class="absolute top-24 z-20 h-hull p-4 mx-2 text-left rounded shadow-xl w-[600px] space-y-4 bg-violet-50"
+        class="absolute top-24 z-20 h-hull p-4 mx-2 text-left rounded shadow-xl w-[600px] space-y-4 bg-white"
         @click.away="modelDelete = false">
         <div class="flex-col flex gap-y-3  rounded-md">
-            <div class="inline-flex items-center gap-x-4 border-b-2 border-red-600 p-2 py-4">
+            <div class="inline-flex items-center gap-x-4 p-2">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                      class="size-6 fill-red-600">
                     <path
@@ -18,9 +18,9 @@
             <div class=" p-2 text-lg text-gray-600 font-semibold">
                 Do you want to <b class="text-red-600">delete</b> this Permanently ?
             </div>
-            <div class="w-full flex justify-end p-2 gap-x-3 ">
+            <div class="w-full flex justify-end p-2 gap-x-3 bg-gray-100 rounded-md">
                 <x-button.cancel-x @click="modelDelete = false"/>
-                <x-button.danger-x {{$attributes}} />
+                <x-button.danger-x {{$attributes}} @click="setTimeout(() => { modelDelete = false; }, 500)"/>
             </div>
         </div>
     </div>

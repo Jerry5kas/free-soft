@@ -10,7 +10,7 @@
 
         <div class="mt-1" x-cloak x-data="{ modelDelete : false }">
             <x-button.delete @click="modelDelete = true"/>
-            <x-modal.delete wire:click="getDelete({{$id}})" />
+            <x-modal.deleteDialog wire:click="getDelete({{$id}})" />
         </div>
     </div>
 </td>

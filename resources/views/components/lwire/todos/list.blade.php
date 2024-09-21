@@ -36,7 +36,7 @@
                     <x-button.edit wire:click="edit({{$row->id}})"/>
                     <div class="mt-1" x-cloak x-data="{ modelDelete : false }">
                         <x-button.delete @click="modelDelete = true"/>
-                        <x-modal.delete wire:click="delete({{$row->id}})"/>
+                        <x-modal.deleteDialog wire:click="delete({{$row->id}})"/>
                     </div>
                 </div>
             </div>

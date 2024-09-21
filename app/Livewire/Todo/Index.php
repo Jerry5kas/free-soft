@@ -50,7 +50,8 @@ class Index extends Component
         $todo->save();
     }
 
-    public function update() {
+    public function update()
+    {
         $this->validateOnly('eName');
         Todo::find($this->eId)->update([
             'name' => $this->eName,

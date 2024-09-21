@@ -3,6 +3,8 @@
 namespace App\Livewire\Common;
 
 use App\Models\Tag;
+use Illuminate\Support\Str;
+use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 use Livewire\WithPagination;
@@ -15,11 +17,18 @@ class Tags extends Component
 
     #region[Properties]
     public $name;
-    public $active_id=1;
-    public $active;
+    public $active_id = 1;
+    public $active = 1;
     public $search;
     public $sortBy = 'name';
+    public $vid;
+//    public $obj;
+    public $eName;
     public $sortAsc = true;
+
+    public $openModal = false;
+
+
     #endregion
     protected $queryString = [
         'active' => ['except' => false],
@@ -29,38 +38,63 @@ class Tags extends Component
     ];
 
     protected $rules = [
-        'name' => 'required|string|min:4',
+        'name' => 'required|unique:tags|string|min:4',
         'active_id' => 'boolean',
     ];
 
-    public function render()
-    {
-        $lists = Tag::where('user_id', auth()->user()->id)
-            ->when($this->search, function ($query) {
-                return $query->where(function ($query) {
-                    $query->where('name', 'like', '%' . $this->search . '%')
-                        ->orwhere('active_id', 'like', '%' . $this->search . '%');
-                });
-            })
-            ->when($this->active, function ($query) {
-                return $query->active();
-            })
-            ->orderBy($this->sortBy, $this->sortAsc ? 'Asc' : 'Desc')
-            ->paginate(15);
 
-        return view('livewire.common.tags')->with([
-            "lists" => $lists,
-        ]);
+    public function getSave()
+    {
+        $this->validate();
+        if ($this->name != '') {
+            if ($this->vid == "") {
+                Tag::create([
+                    'name' => $this->name,
+                    'active_id' => $this->active_id,
+                    'user_id' => auth()->id()
+                ]);
+            } else {
+                $obj = Tag::find($this->vid);
+                $obj->name = Str::ucfirst($this->name);
+                $obj->active_id = $this->active_id;
+                $obj->save();
+            }
+        }
+        $this->reset();
     }
 
-    public function updatingActive()
+    public function getEdit($id)
     {
-        $this->resetPage();
+        if ($id) {
+            $obj = Tag::find($id);
+            $this->vid = $obj->id;
+            $this->name = $obj->name;
+            $this->active_id = $obj->active_id;
+            return $obj;
+        }
+        $this->reset();
+        return null;
     }
 
-    public function updatingSearch()
+
+    public function getDelete(Tag $tag)
     {
-        $this->resetPage();
+        $tag->delete();
+    }
+
+
+//    public function updatingActive()
+//    {
+//        $this->resetPage();
+//    }
+//
+//    public function updatingSearch()
+//    {
+//        $this->resetPage();
+//    }
+    public function open()
+    {
+        $this->openModal = !$this->openModal;
     }
 
     public function sort($field)
@@ -71,29 +105,27 @@ class Tags extends Component
         $this->sortBy = $field;
     }
 
-    public function getSave()
+    public function getList()
     {
-        $this->validate();
-        Tag::create([
-            'name' => $this->name,
-            'active_id' => $this->active_id ?? 0,
-            'user_id' => auth()->id()
+        $lists = Tag::where('user_id', auth()->user()->id)
+            ->when($this->search, function ($query) {
+                return $query->where(function ($query) {
+                    $query->where('name', 'like', '%' . $this->search . '%');
+                });
+            })
+            ->when($this->active, function ($query) {
+                return $query->active();
+            })
+            ->orderBy($this->sortBy, $this->sortAsc ? 'Asc' : 'Desc')
+            ->paginate(15);
+        return $lists;
+    }
+
+    public function render()
+    {
+
+        return view('livewire.common.tags')->with([
+            "lists" => $this->getList()
         ]);
-        $this->resetPage();
-        $this->redirect(route('tags'));
     }
-
-    public function getEdit(Tag $tags)
-    {
-        $this->name = $tags->name;
-        $this->active_id = $tags->active_id;
-    }
-
-    public function getDelete(Tag $tag)
-    {
-        $tag->delete();
-        $this->redirect(route('tags'));
-    }
-
-
 }

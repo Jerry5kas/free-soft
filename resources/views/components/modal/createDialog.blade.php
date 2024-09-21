@@ -13,6 +13,7 @@
                 {{ $label }}
             </h3>
             <div class="space-y-4">
+
                 {{ $slot }}
             </div>
         </div>
@@ -20,13 +21,20 @@
         <!-- One big close button.  --->
         <div class="flex w-full rounded-md shadow-sm  justify-between">
             <div class="w-1/2 inline-flex items-center gap-2 text-sm tracking-wider font-semibold px-1">
-                <input type="checkbox" wire:model.live="active_id"
-                       class="rounded-sm text-cyan-600 focus:ring-cyan-600 border-2 border-cyan-600 transition-all duration-300 ease-out">
-                <label for="">Active</label>
+
+                @if($this->active_id)
+                    <input type="checkbox" checked  wire:model.live="active_id"
+                           class="rounded-sm text-cyan-600 focus:ring-cyan-600 border-2 border-cyan-600 transition-all duration-300 ease-out">
+                    <label for="">Active</label>
+                @else
+                    <input type="checkbox"  wire:model.live="active_id"
+                           class="rounded-sm text-cyan-600 focus:ring-cyan-600 border-2 border-cyan-600 transition-all duration-300 ease-out">
+                    <label for="">Active</label>
+                @endif
             </div>
             <div class="w-1/2 justify-end flex gap-x-3">
                 <x-button.back-x @click="open = false"/>
-                <x-button.save-x wire:click="getSave()"/>
+                <x-button.save-x  @click="setTimeout(() => { open = false; }, 500)" wire:click="getSave()"/>
             </div>
         </div>
 
