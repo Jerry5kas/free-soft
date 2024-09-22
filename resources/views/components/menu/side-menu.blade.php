@@ -26,6 +26,7 @@
         <ul class="flex flex-col " x-data="{ selected: null }">
 
             <x-menu.sub.common />
+            <x-menu.sub.tasks />
 
             <x-menu.sub.logout />
 
