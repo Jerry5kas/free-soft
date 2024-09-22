@@ -60,6 +60,7 @@ class Tags extends Component
                 $obj->save();
             }
         }
+
         $this->reset();
     }
 
