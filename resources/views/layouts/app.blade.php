@@ -18,37 +18,38 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
-    <x-jet.banner />
+<x.jet-banner/>
 
-    <div class="min-h-screen bg-[#F8F8FF]">
-        {{-- @livewire('navigation-menu') --}}
-        <x-menu.base.sidenav />
+<div x-data="{ sidebarOpen: false }" @keydown.window.escape="sidebarOpen=false"
+     class="min-h-screen bg-white print:bg-white">
+    <div class="flex-1">
 
-        @if (isset($header))
-            <header class="bg-white shadow mt-16">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endif
-
-        <!-- Page Heading -->
+        <x-menu.top-menu>{{$header}}</x-menu.top-menu>
+        <x-menu.side-menu/>
 
         <!-- Page Content -->
-        <main class="sm:mt-16">
-            <div class="sm:p-5">
-                {{ $slot }}
-            </div>
+        <main {{$attributes}} class="p-2 bg-white print:bg-white sm:p-5 ">
+            {{ $slot }}
         </main>
+
     </div>
+</div>
+{{-- <x-alerts.notification/> --}}
 
-    @stack('modals')
+@stack('modals')
 
-    @livewireScripts
+@livewireScripts
 
+<script>
+    function copyToClipboard(id) {
+        navigator.clipboard.writeText(id);
+    }
+</script>
 
-    @if (\Route::current()->getName() == 'dashboard')
-        <x-web.dashboard.copyright />
-    @endif
-    </body>
+@stack('custom-scripts')
+
+@if (\Route::current()->getName() == 'dashboard')
+    <x-web.dashboard.copyright />
+@endif
+</body>
 </html>
