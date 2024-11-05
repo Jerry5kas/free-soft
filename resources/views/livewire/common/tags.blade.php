@@ -11,7 +11,7 @@
         </div>
     @endif --}}
 
-    @endif
+{{--    @endif--}}
 
     <!-- modal div -->
     <x-forms.m-panel-empty label="Tags">

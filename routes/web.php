@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', App\Livewire\Web\Home\Index::class)->name('home');
+Route::get('home2', App\Livewire\Web\Home\Index2::class)->name('home2');
 Route::get('about', App\Livewire\Web\About\Index::class)->name('about');
 Route::get('contacts', App\Livewire\Web\Contact\Index::class)->name('contact');
 Route::get('service', App\Livewire\Web\Service\Index::class)->name('service');
